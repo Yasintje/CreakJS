@@ -1,4 +1,4 @@
-class Component extends HTMLElement{
+class BaseComponent extends HTMLElement{
 
     state = {};
 
@@ -34,6 +34,17 @@ class Component extends HTMLElement{
         return super.getAttribute(name) ?? "";
     }
 
+    /**
+     * @param {string} name 
+     * @param {Object} name 
+     * @returns {HTMLElement}
+     */
+    addEventListener(name, { onclick }){
+        let element = this.getElement(name);
+
+        if(typeof onclick === "function") element.onclick = (e) => onclick(e);
+    }
+
     getAttributes(){
         var map = {};
         let attributes = this.attributes;
@@ -56,11 +67,6 @@ class Component extends HTMLElement{
         this.innerHTML = this.render();
         this.handle();
     }
-    
-    getParam(name){
-        if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
-            return decodeURIComponent(name[1]).toString();
-    }
 
     prepare(){}
 
@@ -71,7 +77,7 @@ class Component extends HTMLElement{
     }
 
     /**
-     * @param {Object<string, Component>} componentsMap 
+     * @param {Object<string, BaseComponent>} componentsMap 
      */
     static register(componentsMap){
         let components = Object.values(componentsMap);
@@ -85,4 +91,4 @@ class Component extends HTMLElement{
 }
 
 
-export default Component;
+export default BaseComponent;

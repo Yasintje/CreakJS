@@ -1,4 +1,4 @@
-import BaseComponent from "/src/Base.component.js";
+import BaseComponent from "../src/components/BaseComponent.js";
 
 class Counter extends BaseComponent{
 
@@ -7,10 +7,11 @@ class Counter extends BaseComponent{
     }
 
     handle(){
-        let btn = this.getElement("#btn");
-        btn.addEventListener("click", ()=>{
-            this.state.count++;
-        })
+        this.addEventListener("#btn", {
+            onclick: function(e){
+                this.state.count++;
+            }.bind(this)
+        });
     }
 
     render(){
