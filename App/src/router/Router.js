@@ -1,31 +1,24 @@
+import RouterMap from "./RouterMap.js";
+import Route from "./Route.js";
+
 class Router {
 
-    /** @type {Object} */
-    routes = {};
-
-    /** @type {Object} */
-    static lastRout = {};
-
     /** @type {HTMLElement} */
-    mount = null;
+    map = null;
+
+    /** @type {RouterRender} */
+    render = null;
+
+    /** @type {Route} */
+    lastRout = null;
 
     /**
      * @param {string} mount 
-     * @param {Array} routes
+     * @param {Object[]} routes
      */
     constructor(mount, routes){
-        this.routes = routes;
+        this.map = new RouterMap(routes);
         this.mount = document.querySelector(mount);
-        this.mount.innerHTML = "";  
-        
-        routes.forEach(({template, path, title, onload, unload})=>{
-            this.routes[path] = {
-                template: template,
-                title: title,
-                onload: onload,
-                unload: unload
-            }
-        });
     }
 
     start(){
@@ -36,6 +29,7 @@ class Router {
                 window.open(e.target.href);
                 return;
             };
+
             if(e.target.matches("[data-link]") && e.target.matches("[href]")){
                 history.pushState(null, null, e.target.href);
                 this.redirect(location.pathname);
@@ -53,29 +47,21 @@ class Router {
      * @param {string} path 
      */
     redirect(pathname){
-        let route = this.routes[pathname] ?? null;
-        if(route === null){
+        let route = this.map.get(pathname, this.mount);
+        
+        if(this.map.exists(pathname) || route.getRoute() === null){
             history.back(); // This will get trigged when a rout doesn't exists
             return;
         }
 
-        if(typeof route.onload === 'function'){
-            route.onload(this);
-        }
-
-        if(typeof Router.lastRout.unload === 'function'){
-            Router.lastRout.unload();
-        }
-
-        document.title = route.title;
+        if(this.lastRout !== null) this.lastRout.unload();
+        route.onload();
         
-        this.mount.innerHTML = ``;
-        this.mount.innerHTML = route.template;
-
-        Router.lastRout = route;
+        route.render(route);
+        this.lastRout = route;
     }
 
-    getParam(name){
+    static getParam(name){
         if(name=(new RegExp('[?&]'+encodeURIComponent(name)+'=([^&]*)')).exec(location.search))
             return decodeURIComponent(name[1]).toString();
     }

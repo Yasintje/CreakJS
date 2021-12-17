@@ -1,6 +1,11 @@
 export default {
-    path: "/",
-    title: "Home",
+    path: "/about/:id",
+    title: "about",
+
+    onload: ({ id }) => {
+        console.log("About page 🧱");
+        console.log(`id: ${id} 🔥`)
+    },
 
     template: `
         <nav class="nav">
@@ -9,9 +14,5 @@ export default {
         </nav>
 
         <cjs-counter></cjs-counter>
-    `,
-
-    onload: ({  }) => {
-        console.log("Home page 🧱")
-    }
+    `
 }
