@@ -1,3 +1,5 @@
+import Creak from "../libs/Creak";
+
 class BaseComponent extends HTMLElement{
 
     state = {};
@@ -64,7 +66,14 @@ class BaseComponent extends HTMLElement{
     }
 
     renderComponent(){
-        this.innerHTML = this.render();
+        let object = {};
+        for(let key in this){
+            object[key] = this[key];
+        }
+        object['state'] = this.state;
+
+        Creak(this.render(), object, this);
+        
         this.handle();
     }
 
@@ -72,6 +81,9 @@ class BaseComponent extends HTMLElement{
 
     handle(){}
 
+    /**
+     * @returns {string}
+     */
     render(){
         return ``;
     }

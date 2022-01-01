@@ -13,6 +13,6 @@ export default {
             <a href="/about/${Math.floor(Math.random() * 10)}" data-link>About</a>
         </nav>
 
-        <cjs-counter></cjs-counter>
+        <cjs-todo></cjs-todo>
     `
 }

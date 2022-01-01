@@ -17,7 +17,7 @@ class Counter extends BaseComponent{
     render(){
         return `
             <h1>Counter</h1>
-            <p>${this.state.count}</p>
+            <p>{{ state.count }}</p>
             <button id="btn">Increment</button>
         `;
     }
