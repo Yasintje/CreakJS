@@ -1,3 +1,4 @@
+import Creak from "../libs/Creak.js";
 import RouterMap from "./RouterMap.js";
 
 class Route{
@@ -49,8 +50,10 @@ class Route{
     render(){
         let route = this.getRoute();
 
-        let { template, title } = route;
-        this.mount.innerHTML = template ?? "";
+        let { template, state, title } = route;
+        Creak(template ?? "", {
+            state: state ?? {}
+        }, this.mount);
         document.title = title ?? "";
     }
 
