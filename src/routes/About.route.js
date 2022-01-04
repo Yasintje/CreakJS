@@ -1,16 +1,14 @@
-let about = {
+let ABOUT = {
     path: "/about/:id",
     title: "about",
 
-    state: {}, 
+    state: {},
 
     onload: ({ id }) => {
-        console.log("About page :bricks:");
+        console.log("About page 🧱");
         console.log(`id: ${id} 🔥`);
         
-        about.state["id"] = id;
-
-        console.log(about);
+        ABOUT.state["id"] = id;
     },
 
 
@@ -19,10 +17,8 @@ let about = {
             <a href="/" data-link>Home</a>
             <a href="/about/${Math.floor(Math.random() * 10)}" data-link>About</a>
         </nav>
-        <cjs-todo></cjs-todo>
-
-        {{ state.id }}
+        <cjs-todo id="{{ state.id }}"></cjs-todo>
     `
 };
 
-export default about;
+export default ABOUT;

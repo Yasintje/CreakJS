@@ -1,11 +1,10 @@
-import Router from "./src/router/Router.js";
+import { BaseComponent as Component, Router } from "creakjs";
 
 // Routes
-import HomeRout from "./routes/Home.rout.js";
+import HomeRout from "./routes/Home.route.js";
 import AboutRoute from "./routes/About.route.js";
 
 // Components
-import Component from "./src/components/BaseComponent.js";
 import Counter from "./components/Counter.component.js";
 import Todo from "./components/Todo.component.js";
 

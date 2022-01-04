@@ -2,10 +2,10 @@ const path = require('path');
 
 module.exports = {
 
-    entry: './App/main.js',
+    entry: './src/main.js',
 
     output: {
-        path: path.resolve(__dirname, 'out'),
+        path: path.resolve(__dirname, 'dist'),
         filename: 'app.js'
     },
 
@@ -14,7 +14,11 @@ module.exports = {
             {
               test: /\.css$/i,
               use: ["style-loader", "css-loader"]
-            }
+            },
+            {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
         ]
     }
 

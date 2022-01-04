@@ -1,4 +1,4 @@
-export default {
+let HOME = {
     path: "/",
     title: "Home",
 
@@ -15,3 +15,5 @@ export default {
         console.log("Home page 🧱")
     }
 }
+
+export default HOME;
