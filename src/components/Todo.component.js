@@ -1,5 +1,5 @@
 import { BaseComponent } from "creakjs";
-import todoComponent from "./todoComponent.html";
+import TodoHTML from "./html/Todo.html";
 
 class Todo extends BaseComponent{
 
@@ -16,7 +16,7 @@ class Todo extends BaseComponent{
     }
 
     render(){
-        return todoComponent;
+        return TodoHTML;
     }
 }
 
