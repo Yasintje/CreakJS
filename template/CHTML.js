@@ -8,7 +8,7 @@ class CHTML{
 
         // BUILD THE CHTML (CHTML STANDS FOR CreakHTML)
         let element = document.createElement("div");
-        element.innerHTML = this.#parseCHTML(html);
+        element.innerHTML = this.#parseCode(this.#parseBrackets(html));
         
         // PARSE THE FUNCTIONS
         element = this.#parseFOR(element);
@@ -64,12 +64,12 @@ class CHTML{
                         o[keys[2]] = object[keys[2]][i];
                         o["i"] = i;
                         
-                        let cHTML = new CreakHTML(data, o);
+                        let cHTML = new CHTML(data, o);
                         outerParent.innerHTML += cHTML.getHTML();
                     }
                 break;
                 default:
-                    new Error(`Can only use: as. Got ${key[1]} as loop method`);
+                    new Error(`Can only use: as. Got ${keys[1]} as loop method`);
                 break;
             }
         });
@@ -77,20 +77,24 @@ class CHTML{
         return element;
     }
 
-    #parseCHTML(html){
+    #parseBrackets(html){
         let foundVariables = [];
-        let foundCodes = [];
 
         html.match(/{{(.*?)}}/g)?.map((match)=> foundVariables.push(match));
-        html.match(/\[(.*?)]/g)?.map((match)=> foundCodes.push(match));
-
 
         foundVariables.forEach(foundVariable=>{
             let key = foundVariable.replace("{{", "").replace("}}", "").replace(/\s/g, "");
-
             if(this.#getVariable(key) === undefined)return;
             html = html.replaceAll(foundVariable, this.#getVariable(key));
         });
+
+        return html;
+    }
+
+    #parseCode(html){
+        let foundCodes = [];
+
+        html.match(/\[(.*?)]/g)?.map((match)=> foundCodes.push(match));
 
         foundCodes.forEach(foundCode=>{
             let code = foundCode.replace("[", "").replace("]", "");
@@ -123,5 +127,16 @@ class CHTML{
 }
 
 export default (html, variables, mount) => {
-    mount.innerHTML = (new CHTML(html, variables)).getHTML();
+    let renderHTML = "";
+
+    let element = document.createElement("div");
+    element.innerHTML = html;
+
+    let template = element.querySelector('template');
+    let style = element.querySelector('style');
+
+    if(style !== null) renderHTML += `<style> ${style.innerHTML} </style>`;
+    if(template !== null) renderHTML += template.innerHTML;
+
+    mount.innerHTML = (new CHTML(renderHTML, variables)).getHTML();
 }

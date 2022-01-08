@@ -28,12 +28,19 @@ class RouterMap{
      * @param {HTMLElement} 
      */
     get(pathname, mount){
-        return new Route(pathname, this, mount);        
+        return new Route(pathname, this, mount);    
     }
     
     exists(pathname){
         let res = this.getData(pathname)[0].result;
         return res === undefined;
+    }
+
+    /**
+     * @returns {Object}
+     */
+    getRoutes(){
+        return this.#routes;
     }
 
 }

@@ -31,12 +31,12 @@ class Component extends HTMLElement{
         // HANDLE CUSTOM EVENTS 
         
         /** @type {NodeListOf<Element>} */
-        let elements = this.querySelectorAll('[onClick]');
+        let elements = this.querySelectorAll('[click]');
 
         elements.forEach(element=>{
             element.addEventListener("click", (e)=>{
-                this[element.getAttribute("onClick")](e);
-                element.removeAttribute("onClick");
+                this[element.getAttribute("click")](e);
+                element.removeAttribute("click");
             });
         });
     }
@@ -81,17 +81,7 @@ class Component extends HTMLElement{
         let object = {};
         for(let key in this) object[key] = this[key];
 
-        let html = "";
-        let element = document.createElement("div");
-        element.innerHTML = this.render();
-
-        let template = element.querySelector('template');
-        let style = element.querySelector('style');
-
-        if(template !== undefined) html += template.innerHTML;
-        if(style !== undefined) html += `<style> ${style.innerHTML} </style>`;
-
-        CHTML(html, object, this.shadowRoot);
+        CHTML(this.render(), object, this.shadowRoot);
         this.#handle();
     }
 

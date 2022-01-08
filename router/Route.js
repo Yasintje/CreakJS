@@ -43,7 +43,7 @@ class Route{
     }
 
     getMatch(){
-        const potentialMatches = this.#map.routes.map(route => {
+        const potentialMatches = this.#map.getRoutes().map(route => {
             return {
                 route,
                 result: location.pathname.match(new RegExp("^" + route.path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$"))
@@ -60,6 +60,7 @@ class Route{
         let route = this.getRoute();
 
         let { render, state, title } = route;
+
         CHTML(render ?? "", {
             state: state ?? {}
         }, this.#mount);
