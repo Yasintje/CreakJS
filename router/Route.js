@@ -59,8 +59,8 @@ class Route{
     render(){
         let route = this.getRoute();
 
-        let { template, state, title } = route;
-        CHTML(template ?? "", {
+        let { render, state, title } = route;
+        CHTML(render ?? "", {
             state: state ?? {}
         }, this.#mount);
         document.title = title ?? "";
