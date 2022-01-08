@@ -3,19 +3,22 @@ import Route from "./Route.js";
 
 class Router {
 
-    /** @type {HTMLElement} */
+    /** @type {RouterMap} */
     #map = null;
 
     /** @type {Route} */
     #lastRout = null;
+
+    /** @type {HTMLElement} */
+    #mount = null;
 
     /**
      * @param {string} mount 
      * @param {Object[]} routes
      */
     constructor(mount, routes){
-        this.#map = new RouterMap(routes);
         this.#mount = document.querySelector(mount);
+        this.#map = new RouterMap(routes);
     }
 
     start(){
@@ -44,7 +47,7 @@ class Router {
      * @param {string} path 
      */
     redirect(pathname){
-        let route = this.#map.get(pathname, this.mount);
+        let route = this.#map.get(pathname, this.#mount);
         
         if(this.#map.exists(pathname) || route.getRoute() === null){
             history.back(); // This will get trigged when a rout doesn't exists

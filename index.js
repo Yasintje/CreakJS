@@ -1,4 +1,4 @@
-import BaseComponent from "./template/CElement";
+import BaseComponent from "./template/Component";
 import Router from "./router/Router";
 import Storage from "./storage/Storage";
 

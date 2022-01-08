@@ -63,6 +63,7 @@ class Route{
         CHTML(render ?? "", {
             state: state ?? {}
         }, this.#mount);
+        
         document.title = title ?? "";
     }
 
